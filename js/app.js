@@ -141,17 +141,32 @@ async function checkHealth() {
  * Display prediction results with animation
  */
 function displayResult(result) {
-    // 从数组中提取值（R 后端返回的是单元素数组）
-    const success = Array.isArray(result.success) ? result.success[0] : result.success;
+    // 🔧 R Plumber 兼容：从单元素数组中提取标量值
+    const _get = (v) => Array.isArray(v) ? v[0] : v;
+
+    const success = _get(result.success);
     if (!success) {
-        throw new Error(result.error || 'Prediction failed');
+        throw new Error(_get(result.error) || 'Prediction failed');
     }
 
-    const probRaw = Array.isArray(result.probability) ? result.probability[0] : result.probability;
-    const riskLevel = Array.isArray(result.risk_level) ? result.risk_level[0] : result.risk_level;
+    // 调试日志：打印完整 API 响应
+    console.log('📊 API Response:', result);
+    console.log('📊 Extracted - probability:', _get(result.probability), 'risk_level:', _get(result.risk_level));
 
-    const isHighRisk = riskLevel === 'High Risk';
+    const probRaw = _get(result.probability);
+    const riskLevel = String(_get(result.risk_level)).trim();
+
+    // 🔧 双重判断：优先用 riskLevel 字符串匹配，若不一致则按概率覆盖
+    let isHighRisk = (riskLevel === 'High Risk');
     const probPercent = Math.round(probRaw * 100);
+    if (!isHighRisk && probRaw >= CONFIG.RISK_THRESHOLD) {
+        console.warn(`⚠️ 风险等级不一致: riskLevel="${riskLevel}" 但 prob=${probPercent}%，强制修正为 High Risk`);
+        isHighRisk = true;
+    }
+    if (isHighRisk && probRaw < CONFIG.RISK_THRESHOLD) {
+        console.warn(`⚠️ 风险等级不一致: riskLevel="${riskLevel}" 但 prob=${probPercent}%，强制修正为 Low Risk`);
+        isHighRisk = false;
+    }
     
     // Show result card
     elements.resultCard.classList.add('show');
