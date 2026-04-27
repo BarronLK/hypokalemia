@@ -10,7 +10,7 @@ const CONFIG = {
     // Update this URL to your Render backend when deployed
     API_BASE_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:8000'  // Local development
-        : 'https://hypokalemia-backend.onrender.com/',  // Production (Render)
+        : 'https://hypokalemia-backend.onrender.com',  // Production (Render)
     
     ENDPOINTS: {
         PREDICT: '/predict',
