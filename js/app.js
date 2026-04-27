@@ -141,13 +141,17 @@ async function checkHealth() {
  * Display prediction results with animation
  */
 function displayResult(result) {
-    if (!result.success) {
+    // 从数组中提取值（R 后端返回的是单元素数组）
+    const success = Array.isArray(result.success) ? result.success[0] : result.success;
+    if (!success) {
         throw new Error(result.error || 'Prediction failed');
     }
-    
-    const { probability, risk_level, model_info } = result;
-    const isHighRisk = risk_level === 'High Risk';
-    const probPercent = Math.round(probability * 100);
+
+    const probRaw = Array.isArray(result.probability) ? result.probability[0] : result.probability;
+    const riskLevel = Array.isArray(result.risk_level) ? result.risk_level[0] : result.risk_level;
+
+    const isHighRisk = riskLevel === 'High Risk';
+    const probPercent = Math.round(probRaw * 100);
     
     // Show result card
     elements.resultCard.classList.add('show');
@@ -183,7 +187,7 @@ function displayResult(result) {
     
     // Animate probability bar
     setTimeout(() => {
-        elements.probabilityBar.style.width = `${probability * 100}%`;
+        elements.probabilityBar.style.width = `${probRaw * 100}%`;
     }, 100);
     
     // Scroll to result on mobile
