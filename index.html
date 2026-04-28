@@ -200,104 +200,36 @@
                     </div>
                 </div>
 
-                <!-- Model Metrics Card -->
+                <!-- Model Info (Always Visible) -->
                 <div class="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
-                    <div class="px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600">
-                        <h2 class="text-lg font-semibold text-white flex items-center">
-                            <i class="fas fa-chart-bar mr-2"></i>
-                            Model Performance Metrics
+                    <div class="px-6 py-4 bg-gradient-to-r from-slate-50 to-slate-100">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center">
+                            <i class="fas fa-microscope mr-2 text-teal-500"></i>
+                            Model Details & Methodology
                         </h2>
-                        <p class="text-sm text-indigo-100 mt-1">Test set evaluation results</p>
                     </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
-                                <p class="text-2xl font-bold text-blue-700">0.859</p>
-                                <p class="text-xs text-blue-600 font-medium mt-1">AUC-ROC</p>
-                            </div>
-                            <div class="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
-                                <p class="text-2xl font-bold text-green-700">0.629</p>
-                                <p class="text-xs text-green-600 font-medium mt-1">Sensitivity</p>
-                            </div>
-                            <div class="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-                                <p class="text-2xl font-bold text-purple-700">0.909</p>
-                                <p class="text-xs text-purple-600 font-medium mt-1">Specificity</p>
-                            </div>
-                            <div class="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
-                                <p class="text-2xl font-bold text-orange-700">0.726</p>
-                                <p class="text-xs text-orange-600 font-medium mt-1">F1-Score</p>
-                            </div>
+                    <div class="px-6 pb-6 space-y-4 text-sm text-slate-600">
+                        <div class="p-4 bg-slate-50 rounded-xl">
+                            <h3 class="font-semibold text-slate-800 mb-2">Model Architecture</h3>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>Algorithm:</strong> XGBoost (eXtreme Gradient Boosting)</li>
+                                <li><strong>Objective:</strong> binary:logistic (for binary classification)</li>
+                                <li><strong>Feature Selection:</strong> Consensus of Boruta + LASSO + SVM-RFE</li>
+                                <li><strong>Cross-validation:</strong> 5-fold stratified CV with early stopping</li>
+                                <li><strong>Preprocessing:</strong> Recipes package for consistent feature engineering</li>
+                            </ul>
                         </div>
                         
-                        <!-- Feature Importance -->
-                        <div class="mt-6 pt-6 border-t border-slate-100">
-                            <h3 class="font-semibold text-slate-700 text-sm mb-3 flex items-center">
-                                <i class="fas fa-star text-yellow-500 mr-2"></i>
-                                Feature Importance (Consensus Selected)
-                            </h3>
-                            <div class="space-y-2">
-                                <div class="flex items-center">
-                                    <span class="text-xs text-slate-600 w-40 truncate">Renin Level</span>
-                                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden ml-2">
-                                        <div class="h-full bg-pink-500 rounded-full" style="width: 100%"></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-xs text-slate-600 w-40 truncate">Fasting Duration</span>
-                                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden ml-2">
-                                        <div class="h-full bg-teal-500 rounded-full" style="width: 65.7%"></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-xs text-slate-600 w-40 truncate">Serum Potassium</span>
-                                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden ml-2">
-                                        <div class="h-full bg-cyan-500 rounded-full" style="width: 48.9%"></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="text-xs text-slate-600 w-40 truncate">K+-Affecting Meds</span>
-                                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden ml-2">
-                                        <div class="h-full bg-purple-500 rounded-full" style="width: 48.1%"></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                            <h3 class="font-semibold text-blue-800 mb-2"><i class="fas fa-stethoscope mr-1"></i> Clinical Context</h3>
+                            <p>This model predicts the risk of postoperative hypokalemia in patients undergoing adrenal surgery. The four input features were identified through consensus feature selection across three machine learning methods.</p>
+                        </div>
+                        
+                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                            <h3 class="font-semibold text-amber-800 mb-2"><i class="fas fa-shield-alt mr-1"></i> Disclaimer</h3>
+                            <p>This tool is intended for research and educational purposes only. It should not be used as a substitute for professional medical judgment. Always consult with qualified healthcare providers for clinical decision-making.</p>
                         </div>
                     </div>
-                </div>
-
-                <!-- Model Info Accordion -->
-                <div class="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
-                    <details class="group">
-                        <summary class="px-6 py-4 cursor-pointer bg-gradient-to-r from-slate-50 to-slate-100 hover:bg-slate-200 transition-colors flex items-center justify-between">
-                            <h2 class="text-lg font-semibold text-slate-700 flex items-center">
-                                <i class="fas fa-microscope mr-2 text-teal-500"></i>
-                                Model Details & Methodology
-                            </h2>
-                            <i class="fas fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
-                        </summary>
-                        <div class="px-6 pb-6 space-y-4 text-sm text-slate-600">
-                            <div class="p-4 bg-slate-50 rounded-xl">
-                                <h3 class="font-semibold text-slate-800 mb-2">Model Architecture</h3>
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>Algorithm:</strong> XGBoost (eXtreme Gradient Boosting)</li>
-                                    <li><strong>Objective:</strong> binary:logistic (for binary classification)</li>
-                                    <li><strong>Feature Selection:</strong> Consensus of Boruta + LASSO + SVM-RFE</li>
-                                    <li><strong>Cross-validation:</strong> 5-fold stratified CV with early stopping</li>
-                                    <li><strong>Preprocessing:</strong> Recipes package for consistent feature engineering</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
-                                <h3 class="font-semibold text-blue-800 mb-2"><i class="fas fa-stethoscope mr-1"></i> Clinical Context</h3>
-                                <p>This model predicts the risk of postoperative hypokalemia in patients undergoing adrenal surgery. The four input features were identified through consensus feature selection across three machine learning methods.</p>
-                            </div>
-                            
-                            <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
-                                <h3 class="font-semibold text-amber-800 mb-2"><i class="fas fa-shield-alt mr-1"></i> Disclaimer</h3>
-                                <p>This tool is intended for research and educational purposes only. It should not be used as a substitute for professional medical judgment. Always consult with qualified healthcare providers for clinical decision-making.</p>
-                            </div>
-                        </div>
-                    </details>
                 </div>
 
             </section>
